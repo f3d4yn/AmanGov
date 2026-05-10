@@ -1,0 +1,34 @@
+{
+  "controls": [
+    { "id": 1, "name": "Mots de passe forts", "status": "conforme", "weight": 3, "domain": "Accès" },
+    { "id": 2, "name": "Chiffrement", "status": "conforme", "weight": 3, "domain": "Données" },
+    { "id": 3, "name": "Sauvegardes", "status": "non_conforme", "weight": 3, "domain": "Données" },
+    { "id": 4, "name": "Journalisation", "status": "conforme", "weight": 2, "domain": "Surveillance" },
+    { "id": 5, "name": "Contrôle d'accès", "status": "non_conforme", "weight": 3, "domain": "Accès" },
+    { "id": 6, "name": "Mise à jour", "status": "non_conforme", "weight": 2, "domain": "Maintenance" },
+    { "id": 7, "name": "Firewall", "status": "conforme", "weight": 2, "domain": "Réseau" },
+    { "id": 8, "name": "Antivirus", "status": "conforme", "weight": 2, "domain": "Protection" },
+    { "id": 9, "name": "Backup test", "status": "non_conforme", "weight": 2, "domain": "Données" },
+    { "id": 10, "name": "Politique sécurité", "status": "non_conforme", "weight": 1, "domain": "Gouvernance" },
+    { "id": 11, "name": "Formation", "status": "non_conforme", "weight": 1, "domain": "Gouvernance" },
+    { "id": 12, "name": "Audit", "status": "non_conforme", "weight": 1, "domain": "Gouvernance" }
+  ],
+  "scoring": {
+    "total_weight": 25,
+    "formula": "sum(weight of conforme controls) / total_weight * 100",
+    "max_score": 100
+  },
+  "benchmark": {
+    "your_admin": 58,
+    "national_average": 52,
+    "percentile": "Top 30%"
+  },
+  "history": [
+    { "month": "Décembre 2025", "score": 45 },
+    { "month": "Janvier 2026", "score": 48 },
+    { "month": "Février 2026", "score": 52 },
+    { "month": "Mars 2026", "score": 55 },
+    { "month": "Avril 2026", "score": 56 },
+    { "month": "Mai 2026", "score": 58 }
+  ]
+}
