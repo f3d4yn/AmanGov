@@ -1,5 +1,4 @@
 'use client'
-<<<<<<< HEAD
 import { useState } from 'react'
 
 const controles = [
@@ -28,7 +27,7 @@ const historique = [
 
 const recommandationsIA = [
   'Mettre en place des sauvegardes automatiques quotidiennes (domaine Continuité)',
-  'Implémenter le contrôle d\'accès par rôle (RBAC) pour les agents',
+  "Implémenter le contrôle d'accès par rôle (RBAC) pour les agents",
   'Planifier une session de formation obligatoire pour tous les agents',
   'Tester les backups mensuellement avec un rapport de vérification',
 ]
@@ -53,7 +52,6 @@ export default function ConformitePage() {
       <h1 className="text-3xl font-bold text-green-400 mb-2">Conformité DGSSI</h1>
       <p className="text-slate-400 mb-8">Évaluation des 12 contrôles de sécurité — DGI Maroc</p>
 
-      {/* Score + Benchmark */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
         <div className="bg-slate-800 rounded-xl p-8 text-center col-span-1">
           <div className={`text-7xl font-bold ${scoreColor}`}>{score}%</div>
@@ -80,7 +78,6 @@ export default function ConformitePage() {
           ))}
         </div>
 
-        {/* Historique simplifié */}
         <div className="bg-slate-800 rounded-xl p-6 col-span-1">
           <h3 className="text-slate-400 text-sm mb-4 font-semibold uppercase tracking-wider">Historique 6 mois</h3>
           <div className="flex items-end gap-2 h-24">
@@ -95,7 +92,6 @@ export default function ConformitePage() {
         </div>
       </div>
 
-      {/* Alerte si score < 70 */}
       {score < 70 && (
         <div className="bg-orange-900/30 border border-orange-500/50 rounded-xl p-4 mb-6 flex items-center gap-3">
           <span className="text-orange-400 text-2xl">⚠️</span>
@@ -106,7 +102,6 @@ export default function ConformitePage() {
         </div>
       )}
 
-      {/* Filtres domaine */}
       <div className="flex gap-2 flex-wrap mb-4">
         {domaines.map(d => (
           <button key={d} onClick={() => setFiltre(d)}
@@ -116,7 +111,6 @@ export default function ConformitePage() {
         ))}
       </div>
 
-      {/* Liste contrôles */}
       <h2 className="text-xl font-semibold mb-4">Contrôles de sécurité</h2>
       <div className="grid gap-3 mb-8">
         {filtres.map(c => (
@@ -137,7 +131,6 @@ export default function ConformitePage() {
         ))}
       </div>
 
-      {/* Recommandations IA */}
       <button onClick={() => setShowReco(!showReco)}
         className="bg-purple-600 hover:bg-purple-500 px-8 py-3 rounded-lg font-semibold transition mb-4">
         🤖 Recommandations IA
@@ -157,15 +150,3 @@ export default function ConformitePage() {
     </main>
   )
 }
-=======
-import PageLayout from '@/components/PageLayout'
-export default function Conformite() {
-  return (
-    <PageLayout title="Conformité DGSSI / CNDP" currentPath="/conformite">
-      <div style={{ padding: '32px' }}>
-        {/* Abdessamad travaille ici */}
-      </div>
-    </PageLayout>
-  )
-}
->>>>>>> origin/module-scanner

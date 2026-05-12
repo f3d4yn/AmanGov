@@ -1,5 +1,4 @@
 'use client'
-<<<<<<< HEAD
 import { useState } from 'react'
 
 const templates = [
@@ -50,11 +49,8 @@ export default function PhishingPage() {
     <main className="min-h-screen bg-slate-900 text-white p-8">
       <h1 className="text-3xl font-bold text-yellow-400 mb-2">Simulation Phishing Darija</h1>
       <p className="text-slate-400 mb-8">Formation anti-phishing pour les agents</p>
-
       <div className="flex gap-4 mb-8 flex-wrap">
-        <select
-          value={cible}
-          onChange={e => setCible(e.target.value)}
+        <select value={cible} onChange={e => setCible(e.target.value)}
           className="bg-slate-700 rounded-lg px-4 py-3 text-white outline-none">
           {['CNSS', 'DGI', 'Barid', 'RAM', 'ONEE'].map(c => (
             <option key={c} value={c}>{c}</option>
@@ -65,7 +61,6 @@ export default function PhishingPage() {
           Générer Email
         </button>
       </div>
-
       {emailGenere && (
         <div className="max-w-2xl">
           <div className="bg-white text-gray-900 rounded-xl overflow-hidden shadow-2xl">
@@ -94,15 +89,3 @@ export default function PhishingPage() {
     </main>
   )
 }
-=======
-import PageLayout from '@/components/PageLayout'
-export default function Phishing() {
-  return (
-    <PageLayout title="Simulateur Phishing Darija" currentPath="/phishing">
-      <div style={{ padding: '32px' }}>
-        {/* Malak travaille ici */}
-      </div>
-    </PageLayout>
-  )
-}
->>>>>>> origin/module-scanner
