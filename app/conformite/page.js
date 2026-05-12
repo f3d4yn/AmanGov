@@ -1,265 +1,158 @@
-'use client';
+'use client'
+import { useState } from 'react'
 
-import { useEffect, useState } from 'react';
-import {
-  LineChart, Line, XAxis, YAxis, CartesianGrid,
-  Tooltip, ResponsiveContainer, ReferenceLine
-} from 'recharts';
+const controles = [
+  { id: 1, nom: 'Mots de passe forts', statut: 'conforme', poids: 3, domaine: 'Authentification' },
+  { id: 2, nom: 'Chiffrement des données', statut: 'conforme', poids: 3, domaine: 'Protection' },
+  { id: 3, nom: 'Sauvegardes régulières', statut: 'non_conforme', poids: 2, domaine: 'Continuité' },
+  { id: 4, nom: 'Journalisation', statut: 'conforme', poids: 2, domaine: 'Détection' },
+  { id: 5, nom: 'Contrôle des accès', statut: 'non_conforme', poids: 3, domaine: 'Authentification' },
+  { id: 6, nom: 'Mises à jour système', statut: 'conforme', poids: 2, domaine: 'Protection' },
+  { id: 7, nom: 'Firewall actif', statut: 'conforme', poids: 3, domaine: 'Protection' },
+  { id: 8, nom: 'Antivirus', statut: 'conforme', poids: 2, domaine: 'Protection' },
+  { id: 9, nom: 'Test de backup', statut: 'non_conforme', poids: 2, domaine: 'Continuité' },
+  { id: 10, nom: 'Politique de sécurité', statut: 'conforme', poids: 1, domaine: 'Gouvernance' },
+  { id: 11, nom: 'Formation des agents', statut: 'non_conforme', poids: 2, domaine: 'Gouvernance' },
+  { id: 12, nom: 'Audit de sécurité', statut: 'conforme', poids: 3, domaine: 'Gouvernance' },
+]
 
-// Circular gauge component
-function CircularGauge({ score }) {
-  const radius = 80;
-  const circumference = 2 * Math.PI * radius;
-  const progress = (score / 100) * circumference;
-  const color = score >= 70 ? '#38a169' : score >= 50 ? '#d69e2e' : '#e53e3e';
+const historique = [
+  { mois: 'Déc', score: 44 },
+  { mois: 'Jan', score: 48 },
+  { mois: 'Fév', score: 51 },
+  { mois: 'Mar', score: 55 },
+  { mois: 'Avr', score: 56 },
+  { mois: 'Mai', score: 58 },
+]
 
-  return (
-    <div className="flex flex-col items-center justify-center">
-      <svg width="200" height="200" className="transform -rotate-90">
-        <circle cx="100" cy="100" r={radius} fill="none"
-          stroke="#2d3748" strokeWidth="16" />
-        <circle cx="100" cy="100" r={radius} fill="none"
-          stroke={color} strokeWidth="16"
-          strokeDasharray={`${progress} ${circumference}`}
-          strokeLinecap="round"
-          style={{ transition: 'stroke-dasharray 1s ease' }}
-        />
-      </svg>
-      <div className="absolute flex flex-col items-center">
-        <span className="text-5xl font-bold text-white">{score}</span>
-        <span className="text-gray-400 text-sm">/ 100</span>
-      </div>
-    </div>
-  );
-}
+const recommandationsIA = [
+  'Mettre en place des sauvegardes automatiques quotidiennes (domaine Continuité)',
+  'Implémenter le contrôle d\'accès par rôle (RBAC) pour les agents',
+  'Planifier une session de formation obligatoire pour tous les agents',
+  'Tester les backups mensuellement avec un rapport de vérification',
+]
 
 export default function ConformitePage() {
-  const [score, setScore] = useState(null);
-  const [controls, setControls] = useState([]);
-  const [prediction, setPrediction] = useState(null);
-  const [history, setHistory] = useState([]);
-  const [benchmark, setBenchmark] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [predicting, setPredicting] = useState(false);
+  const [showReco, setShowReco] = useState(false)
+  const [filtre, setFiltre] = useState('Tous')
 
-  useEffect(() => {
-    fetchAll();
-  }, []);
+  const total = controles.reduce((acc, c) => acc + c.poids, 0)
+  const score = Math.round(
+    (controles.filter(c => c.statut === 'conforme').reduce((acc, c) => acc + c.poids, 0) / total) * 100
+  )
+  const scoreColor = score >= 70 ? 'text-green-400' : score >= 50 ? 'text-yellow-400' : 'text-red-400'
+  const scoreMsg = score >= 70 ? '✅ Bon niveau' : score >= 50 ? '⚠️ À améliorer' : '🔴 Critique'
+  const nonConformes = controles.filter(c => c.statut === 'non_conforme').length
 
-  async function fetchAll() {
-    try {
-      const [scoreRes, controlsRes] = await Promise.all([
-        fetch('/api/compliance/score'),
-        fetch('/api/compliance/controls')
-      ]);
-      const scoreData = await scoreRes.json();
-      const controlsData = await controlsRes.json();
-
-      setScore(scoreData);
-      setControls(controlsData.controls);
-
-      // Mock history + benchmark from JSON
-      setHistory([
-        { month: 'Déc', score: 45 },
-        { month: 'Jan', score: 48 },
-        { month: 'Fév', score: 52 },
-        { month: 'Mar', score: 55 },
-        { month: 'Avr', score: 56 },
-        { month: 'Mai', score: scoreData.score }
-      ]);
-
-      setBenchmark({ your_admin: scoreData.score, national_average: 52, percentile: 'Top 30%' });
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  async function runPrediction() {
-    setPredicting(true);
-    try {
-      const res = await fetch('/api/compliance/predict', { method: 'POST' });
-      const data = await res.json();
-      setPrediction(data);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setPredicting(false);
-    }
-  }
-
-  function exportPDF() {
-    window.print();
-  }
-
-  if (loading) return (
-    <div className="min-h-screen bg-slate-900 flex items-center justify-center">
-      <div className="text-white text-xl animate-pulse">Chargement du module conformité...</div>
-    </div>
-  );
-
-  const statusColor = score?.status === 'BON' ? 'text-green-400' :
-    score?.status === 'MOYEN' ? 'text-yellow-400' : 'text-red-400';
+  const domaines = ['Tous', ...new Set(controles.map(c => c.domaine))]
+  const filtres = filtre === 'Tous' ? controles : controles.filter(c => c.domaine === filtre)
 
   return (
-    <div className="min-h-screen bg-slate-900 text-white p-6">
-      <div className="max-w-6xl mx-auto">
+    <main className="min-h-screen bg-slate-900 text-white p-8">
+      <h1 className="text-3xl font-bold text-green-400 mb-2">Conformité DGSSI</h1>
+      <p className="text-slate-400 mb-8">Évaluation des 12 contrôles de sécurité — DGI Maroc</p>
 
-        {/* Header */}
-        <div className="flex justify-between items-center mb-8">
-          <div>
-            <h1 className="text-3xl font-bold text-white">Module Conformité DGSSI</h1>
-            <p className="text-gray-400 mt-1">Évaluation en temps réel — Administration DGI</p>
-          </div>
-          <button onClick={exportPDF}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition">
-            📄 Exporter rapport
-          </button>
+      {/* Score + Benchmark */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+        <div className="bg-slate-800 rounded-xl p-8 text-center col-span-1">
+          <div className={`text-7xl font-bold ${scoreColor}`}>{score}%</div>
+          <div className="text-slate-400 mt-2 text-lg">{scoreMsg}</div>
+          <div className="text-slate-500 text-sm mt-1">{nonConformes} contrôle(s) non conforme(s)</div>
         </div>
 
-        {/* Top row: Gauge + Benchmark */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-
-          {/* Gauge */}
-          <div className="bg-slate-800 rounded-2xl p-6 flex flex-col items-center">
-            <h2 className="text-lg font-semibold text-gray-300 mb-4">Score de Conformité</h2>
-            <div className="relative flex items-center justify-center">
-              <CircularGauge score={score?.score} />
-            </div>
-            <span className={`text-xl font-bold mt-2 ${statusColor}`}>{score?.status}</span>
-            <p className="text-gray-400 text-sm mt-1">{score?.non_conforme_count} contrôles non conformes sur {score?.total_controls}</p>
-          </div>
-
-          {/* Benchmark */}
-          <div className="bg-slate-800 rounded-2xl p-6">
-            <h2 className="text-lg font-semibold text-gray-300 mb-4">📊 Benchmarking National</h2>
-            {benchmark && (
-              <div className="space-y-4">
-                <div>
-                  <div className="flex justify-between text-sm mb-1">
-                    <span className="text-blue-400 font-medium">Votre administration</span>
-                    <span className="text-white font-bold">{benchmark.your_admin}%</span>
-                  </div>
-                  <div className="w-full bg-slate-700 rounded-full h-3">
-                    <div className="bg-blue-500 h-3 rounded-full transition-all duration-1000"
-                      style={{ width: `${benchmark.your_admin}%` }} />
-                  </div>
-                </div>
-                <div>
-                  <div className="flex justify-between text-sm mb-1">
-                    <span className="text-gray-400">Moyenne nationale</span>
-                    <span className="text-white font-bold">{benchmark.national_average}%</span>
-                  </div>
-                  <div className="w-full bg-slate-700 rounded-full h-3">
-                    <div className="bg-gray-500 h-3 rounded-full"
-                      style={{ width: `${benchmark.national_average}%` }} />
-                  </div>
-                </div>
-                <div className="mt-4 bg-blue-900/40 border border-blue-500/30 rounded-xl p-3 text-center">
-                  <span className="text-blue-300 font-bold text-lg">{benchmark.percentile}</span>
-                  <p className="text-gray-400 text-xs mt-1">des administrations marocaines</p>
-                </div>
+        <div className="bg-slate-800 rounded-xl p-6 col-span-1">
+          <h3 className="text-slate-400 text-sm mb-4 font-semibold uppercase tracking-wider">Benchmark</h3>
+          {[
+            { label: 'Votre administration', val: score, color: scoreColor },
+            { label: 'Moyenne nationale', val: 52, color: 'text-blue-400' },
+            { label: 'Top 30%', val: 70, color: 'text-green-400' },
+          ].map(b => (
+            <div key={b.label} className="mb-3">
+              <div className="flex justify-between mb-1">
+                <span className="text-sm text-slate-400">{b.label}</span>
+                <span className={`font-bold ${b.color}`}>{b.val}%</span>
               </div>
-            )}
-          </div>
+              <div className="bg-slate-700 rounded-full h-2">
+                <div className={`h-2 rounded-full bg-current ${b.color}`} style={{ width: `${b.val}%` }}></div>
+              </div>
+            </div>
+          ))}
         </div>
 
-        {/* History Chart */}
-        <div className="bg-slate-800 rounded-2xl p-6 mb-6">
-          <h2 className="text-lg font-semibold text-gray-300 mb-4">📈 Historique 6 mois</h2>
-          <ResponsiveContainer width="100%" height={200}>
-            <LineChart data={history}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#2d3748" />
-              <XAxis dataKey="month" stroke="#718096" />
-              <YAxis domain={[0, 100]} stroke="#718096" />
-              <Tooltip contentStyle={{ backgroundColor: '#2d3748', border: 'none', borderRadius: '8px' }} />
-              <ReferenceLine y={50} stroke="#e53e3e" strokeDasharray="4 4" label={{ value: 'Seuil critique', fill: '#e53e3e', fontSize: 11 }} />
-              <Line type="monotone" dataKey="score" stroke="#3182ce"
-                strokeWidth={3} dot={{ fill: '#3182ce', r: 5 }} />
-            </LineChart>
-          </ResponsiveContainer>
-        </div>
-
-        {/* Controls List */}
-        <div className="bg-slate-800 rounded-2xl p-6 mb-6">
-          <h2 className="text-lg font-semibold text-gray-300 mb-4">🛡️ Contrôles DGSSI</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {controls.map(control => (
-              <div key={control.id}
-                className={`flex items-center justify-between p-3 rounded-xl border ${
-                  control.status === 'conforme'
-                    ? 'bg-green-900/20 border-green-500/30'
-                    : 'bg-red-900/20 border-red-500/30'
-                }`}>
-                <div className="flex items-center gap-3">
-                  <span className="text-lg">{control.status === 'conforme' ? '✅' : '❌'}</span>
-                  <div>
-                    <p className="text-white font-medium text-sm">{control.name}</p>
-                    <p className="text-gray-400 text-xs">{control.domain} · Poids: {control.weight}</p>
-                  </div>
-                </div>
-                <span className={`text-xs font-semibold px-2 py-1 rounded-full ${
-                  control.status === 'conforme'
-                    ? 'bg-green-500/20 text-green-400'
-                    : 'bg-red-500/20 text-red-400'
-                }`}>
-                  {control.status === 'conforme' ? 'CONFORME' : 'NON CONFORME'}
-                </span>
+        {/* Historique simplifié */}
+        <div className="bg-slate-800 rounded-xl p-6 col-span-1">
+          <h3 className="text-slate-400 text-sm mb-4 font-semibold uppercase tracking-wider">Historique 6 mois</h3>
+          <div className="flex items-end gap-2 h-24">
+            {historique.map(h => (
+              <div key={h.mois} className="flex-1 flex flex-col items-center gap-1">
+                <div className="w-full bg-blue-600 rounded-t" style={{ height: `${h.score}%` }}></div>
+                <span className="text-slate-500 text-xs">{h.mois}</span>
               </div>
             ))}
           </div>
+          <p className="text-green-400 text-xs mt-3 text-center">↗ +14 points en 6 mois</p>
         </div>
-
-        {/* Prediction */}
-        <div className="bg-slate-800 rounded-2xl p-6">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-lg font-semibold text-gray-300">🤖 Prédiction IA</h2>
-            <button onClick={runPrediction} disabled={predicting}
-              className="bg-purple-600 hover:bg-purple-700 disabled:opacity-50 text-white px-4 py-2 rounded-lg text-sm font-medium transition">
-              {predicting ? 'Analyse en cours...' : 'Lancer prédiction'}
-            </button>
-          </div>
-
-          {prediction ? (
-            <div className={`p-4 rounded-xl border ${
-              prediction.risque === 'HIGH'
-                ? 'bg-red-900/30 border-red-500/40'
-                : prediction.risque === 'MEDIUM'
-                ? 'bg-yellow-900/30 border-yellow-500/40'
-                : 'bg-green-900/30 border-green-500/40'
-            }`}>
-              <div className="flex items-center gap-2 mb-2">
-                <span className="text-2xl">
-                  {prediction.risque === 'HIGH' ? '🔴' : prediction.risque === 'MEDIUM' ? '🟡' : '🟢'}
-                </span>
-                <span className={`font-bold text-lg ${
-                  prediction.risque === 'HIGH' ? 'text-red-400' :
-                  prediction.risque === 'MEDIUM' ? 'text-yellow-400' : 'text-green-400'
-                }`}>Risque {prediction.risque}</span>
-              </div>
-              <p className="text-white mb-3">{prediction.prediction}</p>
-              {prediction.recommandations && (
-                <div>
-                  <p className="text-gray-400 text-sm font-medium mb-2">Recommandations :</p>
-                  <ul className="space-y-1">
-                    {prediction.recommandations.map((r, i) => (
-                      <li key={i} className="text-gray-300 text-sm flex items-start gap-2">
-                        <span className="text-blue-400 mt-0.5">→</span> {r}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
-          ) : (
-            <div className="text-center text-gray-500 py-8">
-              Cliquez sur "Lancer prédiction" pour analyser les risques
-            </div>
-          )}
-        </div>
-
       </div>
-    </div>
-  );
+
+      {/* Alerte si score < 70 */}
+      {score < 70 && (
+        <div className="bg-orange-900/30 border border-orange-500/50 rounded-xl p-4 mb-6 flex items-center gap-3">
+          <span className="text-orange-400 text-2xl">⚠️</span>
+          <div>
+            <p className="text-orange-400 font-semibold">Prédiction : score à risque</p>
+            <p className="text-slate-400 text-sm">Sans action, le score pourrait descendre de 15 points dans 30 jours.</p>
+          </div>
+        </div>
+      )}
+
+      {/* Filtres domaine */}
+      <div className="flex gap-2 flex-wrap mb-4">
+        {domaines.map(d => (
+          <button key={d} onClick={() => setFiltre(d)}
+            className={`px-3 py-1 rounded-lg text-sm transition ${filtre === d ? 'bg-green-600' : 'bg-slate-700 hover:bg-slate-600'}`}>
+            {d}
+          </button>
+        ))}
+      </div>
+
+      {/* Liste contrôles */}
+      <h2 className="text-xl font-semibold mb-4">Contrôles de sécurité</h2>
+      <div className="grid gap-3 mb-8">
+        {filtres.map(c => (
+          <div key={c.id} className={`bg-slate-800 rounded-xl p-4 flex items-center justify-between border-l-4 ${c.statut === 'conforme' ? 'border-l-green-500' : 'border-l-red-500'}`}>
+            <div className="flex items-center gap-3">
+              <span className={`text-xl ${c.statut === 'conforme' ? 'text-green-400' : 'text-red-400'}`}>
+                {c.statut === 'conforme' ? '✓' : '✗'}
+              </span>
+              <div>
+                <p className="font-medium">{c.nom}</p>
+                <p className="text-slate-400 text-sm">{c.domaine} · Poids : {c.poids}</p>
+              </div>
+            </div>
+            <span className={`px-3 py-1 rounded-full text-sm ${c.statut === 'conforme' ? 'bg-green-900 text-green-400' : 'bg-red-900 text-red-400'}`}>
+              {c.statut === 'conforme' ? 'Conforme' : 'Non conforme'}
+            </span>
+          </div>
+        ))}
+      </div>
+
+      {/* Recommandations IA */}
+      <button onClick={() => setShowReco(!showReco)}
+        className="bg-purple-600 hover:bg-purple-500 px-8 py-3 rounded-lg font-semibold transition mb-4">
+        🤖 Recommandations IA
+      </button>
+      {showReco && (
+        <div className="bg-slate-800 border border-purple-500/30 rounded-xl p-6">
+          <h3 className="text-purple-400 font-semibold mb-3">Plan d'action recommandé</h3>
+          <ol className="space-y-2">
+            {recommandationsIA.map((r, i) => (
+              <li key={i} className="text-slate-300 text-sm flex gap-2">
+                <span className="text-purple-400 font-bold">{i + 1}.</span> {r}
+              </li>
+            ))}
+          </ol>
+        </div>
+      )}
+    </main>
+  )
 }

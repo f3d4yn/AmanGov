@@ -1,0 +1,9 @@
+Context: I'm Abdessamad, working on AmanGov - Miathon'03 (72h hackathon, 12-14 Mai 2026, UMP Oujda).
+My role: Module Conformité DGSSI (backend + frontend + IA)
+Stack: Next.js 14, Tailwind, Recharts, Ollama (llama3), Node.js
+Project path: ~/projects/miathon/amangov-miathon
+GitHub: https://github.com/f3d4yn/AmanGov (branch: abdessamad-conformite)
+Day 1 done: compliance.json, scoring algorithm, 3 API routes (/score /controls /predict), frontend dashboard, Ollama prediction working.
+Day 2 todo: animated alerts, advanced predictions 30/60/90 days, radar chart, improved PDF export.
+acc : chamachaimae
+

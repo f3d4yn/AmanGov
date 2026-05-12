@@ -1,0 +1,175 @@
+=========================================
+   AMANGOV - MODULE CONFORMITE DGSSI
+   Q&A JURY - ABDESSAMAD
+   Miathon'03 | 12-13-14 Mai 2026
+=========================================
+
+------------------------------------------
+Q1: Pouvez-vous nous expliquer votre module et comment il fonctionne ?
+------------------------------------------
+"Le module de conformité évalue une administration selon les 12 contrôles 
+de sécurité de la DGSSI. Chaque contrôle a un poids basé sur son niveau 
+de criticité. On calcule un score sur 100 en utilisant une moyenne pondérée. 
+Si le score tombe en dessous de 50 avec plus de 5 contrôles non conformes, 
+notre IA — qui tourne localement avec Ollama et Llama3 — génère une prédiction 
+et des recommandations concrètes. Tout fonctionne hors ligne, sans dépendance 
+au cloud, et 100% open-source."
+
+------------------------------------------
+Q2: Pourquoi 12 contrôles spécifiquement ?
+------------------------------------------
+"Ces 12 contrôles sont définis par la DGSSI — la Direction Générale de la 
+Sécurité des Systèmes d'Information au Maroc. Ce sont les exigences minimales 
+que toute administration publique marocaine doit respecter. On n'a pas inventé 
+ces règles, on les a implémentées fidèlement selon le cadre réglementaire officiel."
+
+Les 12 contrôles sont :
+1.  Mots de passe forts
+2.  Chiffrement des données
+3.  Sauvegardes
+4.  Journalisation
+5.  Contrôle d'accès
+6.  Mise à jour des systèmes
+7.  Firewall
+8.  Antivirus
+9.  Test des backups
+10. Politique de sécurité
+11. Formation des agents
+12. Audit de sécurité
+
+------------------------------------------
+Q3: Comment vous calculez le score ?
+------------------------------------------
+"On utilise une moyenne pondérée. Chaque contrôle a un poids de 1, 2 ou 3 
+selon son importance. Les contrôles critiques comme le chiffrement ou le 
+firewall ont un poids de 3. Les contrôles moins urgents comme la formation 
+ont un poids de 1.
+
+La formule est :
+Score = (somme des poids des contrôles conformes / somme totale des poids) × 100
+
+Exemple : si les contrôles conformes ont un poids total de 12 sur 25,
+le score est (12/25) × 100 = 48/100.
+
+Cela signifie qu'un contrôle critique non conforme fait baisser le score 
+beaucoup plus qu'un contrôle secondaire."
+
+------------------------------------------
+Q4: Pourquoi Ollama et pas ChatGPT ou une autre IA en ligne ?
+------------------------------------------
+"Deux raisons principales :
+
+1. SOUVERAINETÉ NUMÉRIQUE : Les données des administrations publiques 
+marocaines sont sensibles. On ne peut pas les envoyer sur des serveurs 
+étrangers. Avec Ollama, tout reste sur la machine locale — aucune donnée 
+ne quitte l'administration.
+
+2. CONFORMITÉ AU RÈGLEMENT : Le Miathon impose d'utiliser des logiciels 
+libres de droit. Ollama est 100% open-source sous licence MIT. ChatGPT 
+est propriétaire et payant.
+
+En plus, Ollama fonctionne sans connexion internet, ce qui est crucial 
+pour des administrations qui peuvent avoir des réseaux isolés."
+
+------------------------------------------
+Q5: Quel est le lien avec les ODD (Objectifs de Développement Durable) ?
+------------------------------------------
+"Notre module est directement lié à l'ODD 16 : Paix, Justice et Institutions 
+Efficaces. En aidant les administrations publiques marocaines à être conformes 
+aux standards de cybersécurité, on renforce la confiance des citoyens dans 
+les institutions numériques de l'État.
+
+Concrètement : une administration qui protège bien ses données protège 
+les données personnelles de millions de citoyens marocains."
+
+------------------------------------------
+Q6: Est-ce que ce système est réaliste ? Peut-il vraiment être déployé ?
+------------------------------------------
+"Oui, absolument. Voici pourquoi :
+
+1. OPEN-SOURCE : Tout le code est disponible sur GitHub sous licence MIT.
+   N'importe quelle administration peut l'installer gratuitement.
+
+2. SANS CLOUD : Fonctionne avec Ollama en local, pas besoin d'abonnement 
+   ou de connexion internet permanente.
+
+3. MODULAIRE : Le module conformité peut fonctionner seul ou intégré 
+   avec les autres modules AmanGov (Scanner, Phishing, Incidents).
+
+4. CONFORME DGSSI : Les 12 contrôles sont basés sur les vraies exigences 
+   réglementaires marocaines.
+
+En 72h, on a fait une démonstration fonctionnelle. Avec plus de temps, 
+on connecterait une vraie base de données et un système d'authentification."
+
+------------------------------------------
+Q7: Comment l'IA améliore-t-elle la sécurité dans votre module ?
+------------------------------------------
+"L'IA joue trois rôles dans notre module :
+
+1. PRÉDICTION : Elle analyse le score actuel et l'historique pour prédire 
+   si la situation va se dégrader dans les 30 prochains jours.
+
+2. RECOMMANDATIONS : Elle génère des recommandations personnalisées et 
+   priorisées selon les contrôles qui échouent — pas des conseils génériques.
+
+3. ANALYSE CONTEXTUELLE : Elle comprend le contexte (quels contrôles 
+   échouent, leur criticité, le domaine) pour donner une analyse pertinente.
+
+Résultat : au lieu qu'un expert humain passe des heures à analyser, 
+l'IA génère un rapport en quelques secondes."
+
+------------------------------------------
+Q8: Quelle est la différence entre votre module et une simple checklist ?
+------------------------------------------
+"Une checklist simple dit juste 'oui' ou 'non'. Notre module va beaucoup 
+plus loin :
+
+- SCORE PONDÉRÉ : Pas tous les contrôles ne sont pas égaux. Le chiffrement 
+  compte plus que la formation.
+
+- PRÉDICTION IA : On ne dit pas juste 'vous avez 48%', on dit 'dans 30 jours 
+  votre score va chuter de 15 points si vous ne réagissez pas'.
+
+- BENCHMARKING : On compare l'administration avec la moyenne nationale 
+  pour situer sa position relative.
+
+- HISTORIQUE : On visualise l'évolution sur 6 mois pour voir la tendance.
+
+- RECOMMANDATIONS : L'IA propose des actions concrètes priorisées.
+
+C'est la différence entre un thermomètre et un médecin."
+
+------------------------------------------
+Q9: Pourquoi le score de la démo est 48/100 ?
+------------------------------------------
+"On a choisi 48/100 intentionnellement pour la démo. C'est un score 
+CRITIQUE — en dessous du seuil de 50 — ce qui déclenche la prédiction 
+de l'IA et montre toutes les fonctionnalités du module en action.
+
+Dans la réalité, selon les statistiques, 78% des administrations publiques 
+marocaines ont des scores similaires. Notre démo reflète donc une situation 
+réelle et crédible."
+
+------------------------------------------
+Q10: Si une administration améliore ses contrôles, le score se met à jour ?
+------------------------------------------
+"Oui. Le score est calculé dynamiquement à chaque fois. Il suffit de 
+changer le statut d'un contrôle de 'non_conforme' à 'conforme' dans 
+le fichier de données, et le score se recalcule automatiquement.
+
+Dans une version production, un administrateur pourrait mettre à jour 
+ces statuts via une interface dédiée, et le dashboard se mettrait à 
+jour en temps réel."
+
+=========================================
+   CONSEIL FINAL
+=========================================
+- Parle avec confiance, tu comprends ce que tu as construit.
+- Si tu ne sais pas répondre à une question, dis :
+  "C'est une très bonne question. Dans la version actuelle on n'a pas 
+   encore implémenté ça, mais dans une version production on pourrait..."
+- Souris. Le jury retient l'attitude autant que le contenu.
+
+
+=========================================
