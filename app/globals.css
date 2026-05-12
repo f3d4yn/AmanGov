@@ -25,3 +25,20 @@ button {
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
+
+@media print {
+  nav, header, footer, .no-print,
+  [data-print="hide"] {
+    display: none !important;
+  }
+  body {
+    background: white !important;
+  }
+}
+
+@media print {
+  nav, footer, header, .no-print { display: none !important; }
+  nav *, footer *, header * { display: none !important; }
+  body { background: white !important; }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}

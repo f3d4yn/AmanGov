@@ -21,7 +21,7 @@ export default function Navbar({ currentPath = '/' }) {
   return (
     <>
       {/* Topbar */}
-      <div style={{
+      <div className="print-hide" style={{
         background: COLORS.green.main,
         color: '#fff',
         fontSize: '12px',
@@ -43,7 +43,7 @@ export default function Navbar({ currentPath = '/' }) {
       </div>
 
       {/* Navbar principale */}
-      <nav style={{
+      <nav className="print-hide" style={{
         background: COLORS.white,
         borderBottom: `3px solid ${COLORS.green.main}`,
         padding: '0 32px',

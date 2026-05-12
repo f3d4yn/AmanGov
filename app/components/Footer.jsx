@@ -48,7 +48,7 @@ const linkStyle = {
 export default function Footer() {
   return (
     <>
-      <footer style={{ background: COLORS.green.main, color: '#fff', padding: '28px 32px', display: 'flex', gap: '28px', flexWrap: 'wrap' }}>
+      <footer className="print-hide" style={{ background: COLORS.green.main, color: '#fff', padding: '28px 32px', display: 'flex', gap: '28px', flexWrap: 'wrap' }}>
         {/* Description */}
         <div style={{ flex: 2, minWidth: '180px' }}>
           <h4 style={{ fontSize: '11px', fontWeight: 700, color: COLORS.gold.bright, marginBottom: '12px', textTransform: 'uppercase', letterSpacing: '0.6px' }}>
@@ -76,7 +76,7 @@ export default function Footer() {
       </footer>
 
       {/* Bas du footer */}
-      <div style={{ background: COLORS.green.dark, color: '#6a9a7a', padding: '11px 32px', fontSize: '11px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '6px' }}>
+      <div className="print-hide" style={{ background: COLORS.green.dark, color: '#6a9a7a', padding: '11px 32px', fontSize: '11px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '6px' }}>
         <span>© 2026 AmanGov — Miathon&apos;03 · UMP Oujda · Ilyas · Abdessamad · Malak · Marwa · Imane</span>
         <div>
           <a href="#" style={{ color: '#6a9a7a', textDecoration: 'none', marginLeft: '16px' }}>Mentions légales</a>

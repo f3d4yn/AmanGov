@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-import { Ollama } from 'ollama';
 import data from '../../../../data/compliance.json';
 
 function calculateScore(controls) {
@@ -23,21 +22,24 @@ export async function POST() {
     : `Score actuel ${score}/100 avec ${nonConformeCount} contrôles non conformes. Score stable.`;
 
   try {
-    const ollama = new Ollama({ host: 'http://127.0.0.1:11434' });
-
-    const response = await ollama.generate({
-      model: 'llama3',
-      prompt: `Score cybersécurité: ${score}/100. Non conformes: ${nonConformeNames}.
+    const response = await fetch('http://127.0.0.1:11434/api/generate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'qwen3:1.7b',
+        think: false,
+        prompt: `Score cybersécurité: ${score}/100. Non conformes: ${nonConformeNames}.
 Réponds UNIQUEMENT avec ce JSON sur UNE SEULE LIGNE, sans retour à la ligne:
 {"prediction":"ta prediction","risque":"HIGH","recommandations":["action 1","action 2","action 3"]}`,
-      stream: false,
+        stream: false,
+        options: { temperature: 0.1, num_predict: 1000 },
+      }),
     });
 
-    // Remove all newlines then extract JSON
-    const flat = response.response.replace(/\n/g, ' ');
+    const raw = await response.json();
+    const flat = raw.response.replace(/\n/g, ' ');
     const jsonMatch = flat.match(/\{.*\}/);
     if (!jsonMatch) throw new Error('No JSON found');
-
     const parsed = JSON.parse(jsonMatch[0]);
     return NextResponse.json({ score, source: 'ollama', ...parsed });
 
