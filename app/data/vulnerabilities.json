@@ -1,0 +1,124 @@
+{
+  "vulnerabilities": [
+    {
+      "id": 1,
+      "nom": "Out-of-Bounds Write in FortiOS SSLVPN",
+      "severity": "Critique",
+      "cve_id": "CVE-2024-21762",
+      "description": "Vulnérabilité d'écriture hors limites dans le composant SSLVPN de FortiOS permettant à un attaquant distant non authentifié d'exécuter du code arbitraire.",
+      "solution": "Mettre à jour FortiOS vers les versions 7.4.3, 7.2.7, 7.0.14 ou supérieure."
+    },
+    {
+      "id": 2,
+      "nom": "HTTP/2 Rapid Reset Attack",
+      "severity": "Haute",
+      "cve_id": "CVE-2023-44487",
+      "description": "Attaque par déni de service exploitant le multiplexage HTTP/2 en créant et annulant rapidement des streams.",
+      "solution": "Activer les protections HTTP/2 et mettre à jour nginx, Apache, et les CDN."
+    },
+    {
+      "id": 3,
+      "nom": "Arbitrary File Read in Jenkins",
+      "severity": "Critique",
+      "cve_id": "CVE-2024-23897",
+      "description": "Possibilité de lire des fichiers arbitraires sur le serveur via l'interface CLI.",
+      "solution": "Mettre à jour Jenkins vers 2.442 ou LTS 2.426.3 et restreindre l'accès CLI."
+    },
+    {
+      "id": 4,
+      "nom": "Log4Shell (JNDI Injection)",
+      "severity": "Critique",
+      "cve_id": "CVE-2021-44228",
+      "description": "Exécution de code à distance via des lookups JNDI dans les logs Log4j.",
+      "solution": "Mettre à jour Log4j vers 2.17.1 minimum et supprimer les lookups JNDI."
+    },
+    {
+      "id": 5,
+      "nom": "SQL Injection dans formulaire de login",
+      "severity": "Haute",
+      "cve_id": "CVE-2025-10001",
+      "description": "Injection SQL permettant le bypass d'authentification ou l'extraction de données.",
+      "solution": "Utiliser des Prepared Statements ou un ORM avec binding de paramètres."
+    },
+    {
+      "id": 6,
+      "nom": "XSS Stocké dans les commentaires",
+      "severity": "Moyenne",
+      "cve_id": "CVE-2025-10002",
+      "description": "Script JavaScript malveillant stocké et exécuté pour tous les utilisateurs.",
+      "solution": "Sanitizer les entrées et échapper les sorties (React escape par défaut + CSP)."
+    },
+    {
+      "id": 7,
+      "nom": "Remote Code Execution via File Upload",
+      "severity": "Critique",
+      "cve_id": "CVE-2025-10003",
+      "description": "Possibilité d'uploader et d'exécuter des fichiers webshell.",
+      "solution": "Valider strictement le type de fichier + renommer + stocker hors webroot."
+    },
+    {
+      "id": 8,
+      "nom": "Directory Traversal (Path Traversal)",
+      "severity": "Haute",
+      "cve_id": "CVE-2025-10004",
+      "description": "Accès à des fichiers sensibles via ../ dans les paramètres.",
+      "solution": "Valider et normaliser les chemins (path canonicalization)."
+    },
+    {
+      "id": 9,
+      "nom": "Insecure Direct Object Reference (IDOR)",
+      "severity": "Haute",
+      "cve_id": "CVE-2025-10005",
+      "description": "Accès aux données d'autres utilisateurs en modifiant un ID.",
+      "solution": "Vérifier les autorisations serveur pour chaque objet accédé."
+    },
+    {
+      "id": 10,
+      "nom": "Server-Side Request Forgery (SSRF)",
+      "severity": "Haute",
+      "cve_id": "CVE-2025-10006",
+      "description": "L'application fait des requêtes vers des ressources internes contrôlées par l'attaquant.",
+      "solution": "Whitelist des URLs autorisées et bloquer les accès internes."
+    },
+    {
+      "id": 11,
+      "nom": "Exposition de fichier .env",
+      "severity": "Critique",
+      "cve_id": "CVE-2025-10007",
+      "description": "Le fichier .env contenant des secrets est accessible publiquement.",
+      "solution": "Ajouter .env dans .gitignore et bloquer son accès via le serveur web."
+    },
+    {
+      "id": 12,
+      "nom": "Faible configuration TLS (Sweet32)",
+      "severity": "Moyenne",
+      "cve_id": "CVE-2016-2183",
+      "description": "Utilisation de chiffrements faibles (3DES) vulnérables aux attaques.",
+      "solution": "Forcer TLS 1.2+ avec des suites de chiffrement modernes."
+    },
+    {
+      "id": 13,
+      "nom": "CSRF sur actions sensibles",
+      "severity": "Moyenne",
+      "cve_id": "CVE-2025-10008",
+      "description": "Absence de protection contre les attaques Cross-Site Request Forgery.",
+      "solution": "Implémenter des tokens anti-CSRF et SameSite=Strict sur les cookies."
+    },
+    {
+      "id": 14,
+      "nom": "Utilisation de dépendances vulnérables",
+      "severity": "Moyenne",
+      "cve_id": "CVE-2025-10009",
+      "description": "Le projet utilise des librairies contenant des vulnérabilités connues.",
+      "solution": "Mettre à jour les dépendances via npm audit / Dependabot."
+    },
+    {
+      "id": 15,
+      "nom": "Heartbleed OpenSSL",
+      "severity": "Critique",
+      "cve_id": "CVE-2014-0160",
+      "description": "Lecture de mémoire sensible via l'extension Heartbeat d'OpenSSL.",
+      "solution": "Mettre à jour OpenSSL et régénérer les certificats et clés privées."
+    }
+  ]
+}
