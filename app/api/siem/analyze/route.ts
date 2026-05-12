@@ -56,6 +56,7 @@ Réponds UNIQUEMENT en JSON valide, sans texte avant ou après, avec cette struc
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         model: "qwen3:1.7b",
+        think: false,
         prompt,
         stream: false,
         options: {
