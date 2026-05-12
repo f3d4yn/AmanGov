@@ -1,5 +1,4 @@
 'use client'
-<<<<<<< HEAD
 import { useState } from 'react'
 
 const incidents = [
@@ -40,7 +39,6 @@ export default function IncidentsPage() {
     <main className="min-h-screen bg-slate-900 text-white p-8">
       <h1 className="text-3xl font-bold text-red-400 mb-2">Gestion des Incidents</h1>
       <p className="text-slate-400 mb-8">Suivi et réponse aux incidents de sécurité</p>
-
       <div className="grid grid-cols-3 gap-4 mb-8">
         <div className="bg-slate-800 rounded-xl p-5 text-center">
           <div className="text-4xl font-bold text-red-400">{incidents.length}</div>
@@ -55,7 +53,6 @@ export default function IncidentsPage() {
           <div className="text-slate-400 mt-1">Résolus</div>
         </div>
       </div>
-
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <div>
           <h2 className="text-xl font-semibold mb-4">Timeline des incidents</h2>
@@ -77,7 +74,6 @@ export default function IncidentsPage() {
             ))}
           </div>
         </div>
-
         <div>
           <h2 className="text-xl font-semibold mb-4">Assistant IA</h2>
           <div className="bg-slate-800 rounded-xl p-4 h-96 flex flex-col">
@@ -108,15 +104,3 @@ export default function IncidentsPage() {
     </main>
   )
 }
-=======
-import PageLayout from '@/components/PageLayout'
-export default function Incidents() {
-  return (
-    <PageLayout title="Réponse aux incidents" currentPath="/incidents">
-      <div style={{ padding: '32px' }}>
-        {/* Marwa travaille ici */}
-      </div>
-    </PageLayout>
-  )
-}
->>>>>>> origin/module-scanner
