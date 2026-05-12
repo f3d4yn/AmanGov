@@ -1,42 +1,70 @@
+'use client'
 import Link from 'next/link'
 import { Shield, Search, CheckCircle, Mail, AlertTriangle } from 'lucide-react'
+import { useEffect, useRef } from 'react'
 
 const modules = [
-  { title: 'Scanner', desc: 'Détection de vulnérabilités', href: '/scanner', icon: Search, color: 'text-blue-400', border: 'border-blue-400/30 hover:border-blue-400' },
-  { title: 'Conformité', desc: 'Score DGSSI', href: '/conformite', icon: CheckCircle, color: 'text-green-400', border: 'border-green-400/30 hover:border-green-400' },
-  { title: 'Phishing', desc: 'Simulation Darija', href: '/phishing', icon: Mail, color: 'text-yellow-400', border: 'border-yellow-400/30 hover:border-yellow-400' },
-  { title: 'Incidents', desc: 'Gestion des crises', href: '/incidents', icon: AlertTriangle, color: 'text-red-400', border: 'border-red-400/30 hover:border-red-400' },
+  { title: 'Scanner', desc: 'Détection de vulnérabilités', href: '/scanner', icon: Search },
+  { title: 'Conformité', desc: 'Score DGSSI', href: '/conformite', icon: CheckCircle },
+  { title: 'Phishing', desc: 'Simulation Darija', href: '/phishing', icon: Mail },
+  { title: 'Incidents', desc: 'Gestion des crises', href: '/incidents', icon: AlertTriangle },
 ]
 
 const stats = [
-  { value: '15+', label: 'Vulnérabilités détectées' },
-  { value: '58%', label: 'Score conformité DGI' },
-  { value: '20', label: 'Templates phishing Darija' },
-  { value: '5', label: 'Incidents gérés' },
+  { value: 15, label: 'Vulnérabilités détectées', suffix: '+' },
+  { value: 58, label: 'Score conformité DGI', suffix: '%' },
+  { value: 20, label: 'Templates phishing Darija', suffix: '' },
+  { value: 5, label: 'Incidents gérés', suffix: '' },
 ]
+
+function Counter({ value, suffix }) {
+  const ref = useRef(null)
+  useEffect(() => {
+    let start = 0
+    const step = Math.ceil(value / 40)
+    const timer = setInterval(() => {
+      start += step
+      if (start >= value) { start = value; clearInterval(timer) }
+      if (ref.current) ref.current.textContent = start + suffix
+    }, 30)
+    return () => clearInterval(timer)
+  }, [value, suffix])
+  return <span ref={ref}>0{suffix}</span>
+}
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-slate-900 text-white flex flex-col items-center justify-center px-6 py-16">
+    <main style={{ backgroundColor: '#f5f5f0', minHeight: '100vh' }}
+      className="flex flex-col items-center justify-center px-6 py-16">
+
       {/* Hero */}
       <div className="flex items-center gap-3 mb-4">
-        <Shield className="w-12 h-12 text-blue-400" />
-        <span className="text-blue-400 font-mono text-sm tracking-widest uppercase">v1.0 — Miathon 2026</span>
+        <Shield style={{ color: '#1a5c2a' }} className="w-14 h-14" />
+        <span style={{ color: '#b8860b' }} className="font-mono text-sm tracking-widest uppercase">
+          v1.0 — Miathon 2026
+        </span>
       </div>
-      <h1 className="text-5xl md:text-6xl font-bold mb-4 text-center bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+
+      <h1 style={{ color: '#1a5c2a' }} className="text-5xl md:text-6xl font-bold mb-4 text-center">
         AMANGOV
       </h1>
-      <p className="text-slate-400 text-xl mb-3 text-center">Bouclier Numérique des Administrations Marocaines</p>
-      <p className="text-slate-500 text-sm mb-12 text-center max-w-xl">
-        Plateforme de cybersécurité propulsée par IA — Scanner, Conformité DGSSI, Simulation Phishing Darija, Gestion d'Incidents
+      <p style={{ color: '#555555' }} className="text-xl mb-2 text-center">
+        Bouclier Numérique des Administrations Marocaines
+      </p>
+      <p style={{ color: '#888' }} className="text-sm mb-12 text-center max-w-xl">
+        Plateforme de cybersécurité — Scanner · Conformité DGSSI · Phishing Darija · Incidents
       </p>
 
       {/* Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12 w-full max-w-3xl">
         {stats.map(s => (
-          <div key={s.label} className="bg-slate-800/50 border border-slate-700 rounded-xl p-4 text-center">
-            <div className="text-2xl font-bold text-blue-400">{s.value}</div>
-            <div className="text-slate-400 text-xs mt-1">{s.label}</div>
+          <div key={s.label}
+            style={{ backgroundColor: '#fff', border: '1px solid #d4af37' }}
+            className="rounded-xl p-4 text-center shadow-sm">
+            <div style={{ color: '#1a5c2a' }} className="text-2xl font-bold">
+              <Counter value={s.value} suffix={s.suffix} />
+            </div>
+            <div style={{ color: '#555' }} className="text-xs mt-1">{s.label}</div>
           </div>
         ))}
       </div>
@@ -45,22 +73,23 @@ export default function Home() {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-5 w-full max-w-4xl mb-10">
         {modules.map(m => (
           <Link key={m.title} href={m.href}
-            className={`bg-slate-800 border ${m.border} rounded-xl p-6 flex flex-col items-center gap-3 hover:bg-slate-750 transition-all duration-300 group`}>
-            <m.icon className={`w-10 h-10 ${m.color} group-hover:scale-110 transition-transform`} />
-            <span className="font-semibold">{m.title}</span>
-            <span className="text-slate-400 text-sm text-center">{m.desc}</span>
+            style={{ backgroundColor: '#fff', border: '1px solid #1a5c2a' }}
+            className="rounded-xl p-6 flex flex-col items-center gap-3 hover:shadow-md transition-all duration-300 group">
+            <m.icon style={{ color: '#1a5c2a' }} className="w-10 h-10 group-hover:scale-110 transition-transform" />
+            <span style={{ color: '#1a1a1a' }} className="font-semibold">{m.title}</span>
+            <span style={{ color: '#555' }} className="text-sm text-center">{m.desc}</span>
           </Link>
         ))}
       </div>
 
       <Link href="/scanner"
-        className="bg-blue-600 hover:bg-blue-500 px-10 py-3 rounded-lg font-semibold transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/25">
+        style={{ backgroundColor: '#1a5c2a', color: '#fff' }}
+        className="px-10 py-3 rounded-lg font-semibold hover:opacity-90 transition">
         Découvrir la plateforme →
       </Link>
 
-      {/* Footer */}
-      <p className="mt-16 text-slate-600 text-xs text-center">
-        AmanGov © 2026 — Miathon03 — Équipe : Ilyas · Abdessamad · Malak · Marwa · Imane
+      <p style={{ color: '#aaa' }} className="mt-16 text-xs text-center">
+        AmanGov © 2026 — Miathon03 — Ilyas · Abdessamad · Malak · Marwa · Imane
       </p>
     </main>
   )
