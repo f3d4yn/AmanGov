@@ -3,5 +3,8 @@ const config = {
     "@tailwindcss/postcss": {},
   },
 };
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/module-scanner
 export default config;

@@ -1,4 +1,5 @@
 'use client'
+<<<<<<< HEAD
 import { useState } from 'react'
 
 const templates = [
@@ -93,3 +94,15 @@ export default function PhishingPage() {
     </main>
   )
 }
+=======
+import PageLayout from '@/components/PageLayout'
+export default function Phishing() {
+  return (
+    <PageLayout title="Simulateur Phishing Darija" currentPath="/phishing">
+      <div style={{ padding: '32px' }}>
+        {/* Malak travaille ici */}
+      </div>
+    </PageLayout>
+  )
+}
+>>>>>>> origin/module-scanner
