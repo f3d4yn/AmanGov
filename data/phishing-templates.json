@@ -1,0 +1,142 @@
+[
+  {
+    "id": 1,
+    "cible": "CNSS",
+    "sujet": "Remboursement disponible",
+    "corps": "CNSS: 3andek ta3wid mali jdid. Verifier lma3loumat dyalek bach twslek ddef3a.",
+    "landing_page_url": "/phishing/landed"
+  },
+  {
+    "id": 2,
+    "cible": "CNSS",
+    "sujet": "Compte suspendu",
+    "corps": "CNSS: tm twa9if l7sab dyalek moa9atan. Cliki hna bach t2akked lhawiya.",
+    "landing_page_url": "/phishing/landed"
+  },
+  {
+    "id": 3,
+    "cible": "CNSS",
+    "sujet": "Mise a jour obligatoire",
+    "corps": "CNSS: khassek t7addet lbayanat dyalek 9bel 24 sa3a bach mattwa9efch listifada.",
+    "landing_page_url": "/phishing/landed"
+  },
+  {
+    "id": 4,
+    "cible": "DGI",
+    "sujet": "Retard de paiement",
+    "corps": "DGI: kayn ta2khir f ddariba dyalek. Chouf tafasil w khalles mn hna.",
+    "landing_page_url": "/phishing/landed"
+  },
+  {
+    "id": 5,
+    "cible": "DGI",
+    "sujet": "Verification identite",
+    "corps": "DGI: l7sab jibai dyalek me7taj ta2kid lhawiya daba.",
+    "landing_page_url": "/phishing/landed"
+  },
+  {
+    "id": 6,
+    "cible": "DGI",
+    "sujet": "Dossier suspendu",
+    "corps": "DGI: tm ta3liq lmilaf ddaribi dyalek 7tta t7addet lma3loumat.",
+    "landing_page_url": "/phishing/landed"
+  },
+  {
+    "id": 7,
+    "cible": "Barid Bank",
+    "sujet": "Compte bloque",
+    "corps": "Barid Bank: lcompte dyalek t9fl moa9atan. Verifier lhawiya bach t7ellou.",
+    "landing_page_url": "/phishing/landed"
+  },
+  {
+    "id": 8,
+    "cible": "Barid Bank",
+    "sujet": "Activite suspecte",
+    "corps": "Barid Bank: tsjlat 3amaliya machbouha f 7sabek. Ila machi nta verifier daba.",
+    "landing_page_url": "/phishing/landed"
+  },
+  {
+    "id": 9,
+    "cible": "Barid Bank",
+    "sujet": "Carte expiree",
+    "corps": "Barid Bank: lbita9a dyalek salat. Jedded lma3loumat lbankiya mn hna.",
+    "landing_page_url": "/phishing/landed"
+  },
+  {
+    "id": 10,
+    "cible": "CIH Bank",
+    "sujet": "Tentative de connexion",
+    "corps": "CIH: kayna mo7awala dkhoul machbouha l7sab dyalek. Ammenou daba.",
+    "landing_page_url": "/phishing/landed"
+  },
+  {
+    "id": 11,
+    "cible": "CIH Bank",
+    "sujet": "Verification urgente",
+    "corps": "CIH: lcompte dyalek me7taj verification 3ajila bach maytseddch.",
+    "landing_page_url": "/phishing/landed"
+  },
+  {
+    "id": 12,
+    "cible": "Attijariwafa bank",
+    "sujet": "Carte bancaire suspendue",
+    "corps": "Attijariwafa bank: lbita9a dyalek ghadi ttw9ef ila ma dirti-ch update.",
+    "landing_page_url": "/phishing/landed"
+  },
+  {
+    "id": 13,
+    "cible": "Orange Maroc",
+    "sujet": "Cadeau internet",
+    "corps": "Orange Maroc: rb7ti 50Go internet gratuitement. Active lhadia dyalek daba.",
+    "landing_page_url": "/phishing/landed"
+  },
+  {
+    "id": 14,
+    "cible": "Inwi",
+    "sujet": "Suspension de ligne",
+    "corps": "Inwi: chari7a dyalek ghadi ttw9ef. Verifier lma3loumat chakhsia mn hna.",
+    "landing_page_url": "/phishing/landed"
+  },
+  {
+    "id": 15,
+    "cible": "Maroc Telecom",
+    "sujet": "Recharge offerte",
+    "corps": "IAM: 3andek recharge gratuite 100DH. Cliki hna bach tf3elha.",
+    "landing_page_url": "/phishing/landed"
+  },
+  {
+    "id": 16,
+    "cible": "ONCF",
+    "sujet": "Changement de voyage",
+    "corps": "ONCF: rihla dyalek tbeddlat. Chouf taw9it ljdid mn had rabit.",
+    "landing_page_url": "/phishing/landed"
+  },
+  {
+    "id": 17,
+    "cible": "RAM",
+    "sujet": "Remboursement de vol",
+    "corps": "RAM: lvol dyalek تلغى. Talab remboursement mn hna.",
+    "landing_page_url": "/phishing/landed"
+  },
+  {
+    "id": 18,
+    "cible": "ONEE",
+    "sujet": "Facture impayee",
+    "corps": "ONEE: facture dyalek mazal ma tkhallsatch. 3andek 24h 9bel l9t3.",
+    "landing_page_url": "/phishing/landed"
+  },
+  {
+    "id": 19,
+    "cible": "Ministere Sante",
+    "sujet": "Dossier medical",
+    "corps": "Wizarat Siha: dossier tebbi dyalek me7taj update f aw9at 9riba.",
+    "landing_page_url": "/phishing/landed"
+  },
+  {
+    "id": 20,
+    "cible": "Ministere Justice",
+    "sujet": "Convocation officielle",
+    "corps": "Wizarat l3adl: 3andek convocation rasmiya. Jawb 3liha f 48h.",
+    "landing_page_url": "/phishing/landed"
+  }
+]
