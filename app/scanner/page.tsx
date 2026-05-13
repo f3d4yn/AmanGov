@@ -34,13 +34,13 @@ export default function ScannerPage() {
   };
 
   const lancerScan = async () => {
-    // Réinitialisation complète
+    // Réinitialisation complète pour nouveau scan
     setResults(null);
     setAnalyseIA(null);
     setLoading(true);
     setAnalyzing(false);
 
-    await new Promise(r => setTimeout(r, 2500));
+    await new Promise(resolve => setTimeout(resolve, 2500));
 
     const res = await fetch('/api/scan/results');
     const data = await res.json();
@@ -48,41 +48,44 @@ export default function ScannerPage() {
     setResults(data);
     setLoading(false);
 
-    // Lancer l'analyse IA
+    analyserAvecIA(data.vulnerabilities);
+  };
+
+  const analyserAvecIA = async (vulnerabilities: Vulnerability[]) => {
     setAnalyzing(true);
     try {
-      const aiRes = await fetch('/api/scan/analyze', {
+      const res = await fetch('/api/scan/analyze', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ vulnerabilities: data.vulnerabilities })
+        body: JSON.stringify({ vulnerabilities })
       });
-      const aiData = await aiRes.json();
-      if (aiData.success) setAnalyseIA(aiData.analyseIA);
-    } catch (e) {
-      console.error(e);
+      const data = await res.json();
+      if (data.success) setAnalyseIA(data.analyseIA);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setAnalyzing(false);
     }
-    setAnalyzing(false);
   };
 
   return (
     <PageLayout title="Module Scanner" currentPath="/scanner">
       <div style={{ padding: "32px" }}>
-
         <SectionHeader
           title="Scanner de Vulnérabilités"
           badge="Ollama • Analyse IA"
           note="Détection automatique + Priorisation des risques"
         />
 
-        <div className="flex justify-center my-12">
+        <div style={{ textAlign: 'center', margin: '40px 0' }}>
           <button
             onClick={lancerScan}
             disabled={loading}
             style={{
-              background: loading ? "#4b5563" : "#1a5c2a",
+              background: loading ? "#666" : "#1a5c2a",
               color: "white",
               padding: "16px 50px",
-              fontSize: "1.25rem",
+              fontSize: "1.2rem",
               fontWeight: "600",
               borderRadius: "8px",
               border: "none",
@@ -94,57 +97,48 @@ export default function ScannerPage() {
           </button>
         </div>
 
-        {loading && <LoadingSpinner text="Scan en cours..." />}
+        {loading && <LoadingSpinner text="Analyse des systèmes en cours..." />}
 
         {results && (
-          <>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px", marginBottom: "32px" }}>
-              <Card topColor="green">
-                <p style={{margin:0, fontSize:"0.9rem", color:"#555"}}>TOTAL VULNÉRABILITÉS</p>
-                <p style={{fontSize:"3rem", fontWeight:700, color:"#1a5c2a", margin:"8px 0 0"}}>{results.total}</p>
-              </Card>
-              <Card topColor="gold">
-                <p style={{margin:0, fontSize:"0.9rem", color:"#555"}}>CRITIQUES / HAUTES</p>
-                <p style={{fontSize:"3rem", fontWeight:700, color:"#c0392b", margin:"8px 0 0"}}>
-                  {results.vulnerabilities.filter((v: any) => ["Critique","Haute"].includes(v.severity)).length}
-                </p>
-              </Card>
+          <div>
+            <SectionHeader title={`Vulnérabilités détectées (${results.total})`} />
+
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(460px, 1fr))', gap: '24px' }}>
+              {results.vulnerabilities.map((vuln: Vulnerability) => {
+                const color = severityColor(vuln.severity);
+                return (
+                  <Card key={vuln.id} topColor={vuln.severity === 'Critique' ? 'gold' : 'green'}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '16px' }}>
+                      <h3 style={{ margin: 0, fontSize: '16px' }}>{vuln.nom}</h3>
+                      <span style={{
+                        padding: '4px 12px',
+                        borderRadius: '3px',
+                        fontSize: '12px',
+                        fontWeight: 'bold',
+                        background: color.bg,
+                        color: color.text
+                      }}>
+                        {vuln.severity}
+                      </span>
+                    </div>
+                    <p style={{ color: '#555', lineHeight: '1.6' }}>{vuln.description}</p>
+                    <p style={{ marginTop: '16px', color: '#1a5c2a', fontWeight: '600' }}>
+                      Solution : {vuln.solution}
+                    </p>
+                  </Card>
+                );
+              })}
             </div>
 
-            <Card topColor="green">
-              <SectionHeader title={`Vulnérabilités détectées (${results.total})`} />
-              <div style={{display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(520px, 1fr))", gap:"20px"}}>
-                {results.vulnerabilities.map((v: Vulnerability) => {
-                  const color = severityColor(v.severity);
-                  return (
-                    <div key={v.id} style={{background:"#fff", border:"1px solid #e5e5e5", borderRadius:"12px", padding:"24px"}}>
-                      <div style={{display:"flex", justifyContent:"space-between", alignItems:"start", marginBottom:"12px"}}>
-                        <h3 style={{margin:0, fontSize:"1.1rem"}}>{v.nom}</h3>
-                        <span style={{padding:"4px 14px", borderRadius:"9999px", background:color.bg, color:color.text, fontSize:"0.8rem", fontWeight:600}}>
-                          {v.severity}
-                        </span>
-                      </div>
-                      <p style={{color:"#444", lineHeight:1.6}}>{v.description}</p>
-                      <p style={{marginTop:"16px", color:"#1a5c2a", fontWeight:600}}>
-                        Solution : {v.solution}
-                      </p>
-                    </div>
-                  );
-                })}
-              </div>
-            </Card>
-
-            <Card topColor="gold">
-              <SectionHeader title="🤖 Analyse IA & Plan de Correction" />
-              {analyzing ? (
-                <LoadingSpinner text="Ollama analyse les vulnérabilités..." />
-              ) : analyseIA ? (
-                <div style={{lineHeight:1.7, color:"#333", whiteSpace:"pre-wrap"}}>
+            {analyseIA && (
+              <Card topColor="gold" style={{ marginTop: '40px' }}>
+                <SectionHeader title="🤖 Analyse IA & Plan de Correction" />
+                <div style={{ padding: '20px', background: '#f8f9f8', borderRadius: '4px', whiteSpace: 'pre-wrap' }}>
                   {analyseIA.analyse}
                 </div>
-              ) : null}
-            </Card>
-          </>
+              </Card>
+            )}
+          </div>
         )}
       </div>
     </PageLayout>
