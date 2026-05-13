@@ -102,7 +102,7 @@ export default function Home() {
 
       {/* Breadcrumb */}
       <div style={{ background: '#eef3ee', borderBottom: '0.5px solid #c8d8c8', padding: '9px 32px', fontSize: 12, color: '#666', display: 'flex', alignItems: 'center', gap: 7 }}>
-        <a href="#" style={{ color: '#1a5c2a', textDecoration: 'none' }}>Accueil</a>
+        <Link href="/" style={{ color: '#1a5c2a', textDecoration: 'none' }}>Accueil</Link>
         <span style={{ color: '#999' }}>›</span>
         <span>Tableau de bord national</span>
       </div>
@@ -255,13 +255,17 @@ export default function Home() {
           <p style={{ marginTop: 8, color: '#d4af37', fontSize: 11 }}>MIT License · GitHub Open Source</p>
         </div>
         {[
-          { title: 'Modules', links: ['Scanner', 'Conformité DGSSI', 'Phishing Darija', 'Incidents'] },
-          { title: 'Réglementaire', links: ['dgssi.gov.ma', 'cndp.ma', 'Stratégie 2030', 'Loi 09-08'] },
-          { title: 'Contact', links: ['Équipe AmanGov', 'Documentation', 'GitHub', 'Signaler un incident'] },
+          { title: 'Modules', links: [{l:'Scanner', h:'/scanner'}, {l:'Conformité DGSSI', h:'/conformite'}, {l:'Phishing Darija', h:'/phishing'}, {l:'Incidents', h:'/incidents'}] },
+          { title: 'Réglementaire', links: [{l:'dgssi.gov.ma', h:'https://www.dgssi.gov.ma'}, {l:'cndp.ma', h:'https://www.cndp.ma'}, {l:'Stratégie 2030', h:'https://www.mmsp.gov.ma/fr/actualites/cliquez-ici-pour-d%C3%A9couvrir-la-strat%C3%A9gie-digital-morocco-2030'}, {l:'Loi 09-08', h:'https://cmmb.ma/wp-content/uploads/2014/06/texte-de-loi-09-0811.pdf'}] },
+          { title: 'Contact', links: [{l:'Équipe AmanGov', h:'#'}, {l:'Documentation', h:'#'}, {l:'GitHub', h:'https://github.com/f3d4yn/AmanGov'}, {l:'Signaler un incident', h:'/incidents'}] },
         ].map(col => (
           <div key={col.title} style={{ flex: 1, minWidth: 130 }}>
             <h4 style={{ fontSize: 11, fontWeight: 700, color: '#d4af37', marginBottom: 12, textTransform: 'uppercase', letterSpacing: 0.6 }}>{col.title}</h4>
-            {col.links.map(l => <a key={l} href="#" style={{ fontSize: 12, color: '#a0cca0', lineHeight: 1.9, display: 'block', textDecoration: 'none' }}>{l}</a>)}
+            {col.links.map(link => (
+              <Link key={link.l} href={link.h} style={{ fontSize: 12, color: '#a0cca0', lineHeight: 1.9, display: 'block', textDecoration: 'none' }}>
+                {link.l}
+              </Link>
+            ))}
           </div>
         ))}
       </div>
