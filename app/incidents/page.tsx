@@ -149,7 +149,7 @@ export default function IncidentsPage() {
 
           {/* Résumé IA */}
           <Card topColor="gold">
-            <SectionHeader title="🤖 Analyse IA — Résumé" />
+            <SectionHeader title=" Analyse IA — Résumé" />
             {loading ? (
               <LoadingSpinner text="Ollama analyse les logs…" />
             ) : analyse ? (

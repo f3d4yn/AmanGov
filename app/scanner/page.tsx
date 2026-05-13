@@ -93,7 +93,7 @@ export default function ScannerPage() {
               boxShadow: "0 6px 20px rgba(26,92,42,0.3)"
             }}
           >
-            {loading ? "🔄 Scan en cours..." : "🚀 Lancer le Scan Complet"}
+            {loading ? " Scan en cours..." : " Lancer le Scan Complet"}
           </button>
         </div>
 
@@ -132,7 +132,7 @@ export default function ScannerPage() {
 
             {analyseIA && (
               <Card topColor="gold" style={{ marginTop: '40px' }}>
-                <SectionHeader title="🤖 Analyse IA & Plan de Correction" />
+                <SectionHeader title=" Analyse IA & Plan de Correction" />
                 <div style={{ padding: '20px', background: '#f8f9f8', borderRadius: '4px', whiteSpace: 'pre-wrap' }}>
                   {analyseIA.analyse}
                 </div>

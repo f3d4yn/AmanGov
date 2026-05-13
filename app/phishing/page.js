@@ -40,7 +40,7 @@ export default function PhishingPage() {
       <div style={{ padding: '32px' }}>
         <div style={{ textAlign: 'center', marginBottom: '40px' }}>
           <h1 style={{ fontSize: '2.5rem', fontWeight: 'bold', marginBottom: '12px' }}>
-            🎣 Simulasyon dyal Phishing
+             Simulasyon dyal Phishing
           </h1>
           <p style={{ fontSize: '1.2rem', color: '#94a3b8' }}>
             B Darija dialna - Lwa9i3 bach n3allmou!
@@ -63,8 +63,8 @@ export default function PhishingPage() {
             onChange={(e) => setType(e.target.value)}
             style={{ padding: '12px 20px', borderRadius: '12px', background: '#1e293b', border: '1px solid #475569', color: 'white', fontSize: '1rem' }}
           >
-            <option value="email">📧 Email</option>
-            <option value="sms">📱 SMS</option>
+            <option value="email"> Email</option>
+            <option value="sms"> SMS</option>
           </select>
 
           <button 
@@ -82,7 +82,7 @@ export default function PhishingPage() {
               transition: 'all 0.2s'
             }}
           >
-            {loading ? '⏳ Jari...' : '🎯 Generer wahda jadida'}
+            {loading ? ' Jari...' : ' Generer wahda jadida'}
           </button>
         </div>
 
@@ -139,7 +139,7 @@ export default function PhishingPage() {
         )}
 
         <div style={{ marginTop: '48px' }}>
-          <h3 style={{ fontSize: '1.5rem', fontWeight: 'bold', textAlign: 'center', marginBottom: '24px' }}>📚 20 Templates li 3andek</h3>
+          <h3 style={{ fontSize: '1.5rem', fontWeight: 'bold', textAlign: 'center', marginBottom: '24px' }}> 20 Templates li 3andek</h3>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '16px' }}>
             {templates.map(t => (
               <div key={t.id} style={{ 
@@ -179,7 +179,7 @@ export default function PhishingPage() {
               border: 'none',
               cursor: 'pointer'
             }}>
-              🧪 Dir Quiz daba
+               Dir Quiz daba
             </button>
           </Link>
         </div>
